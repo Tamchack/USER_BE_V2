@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.repository;
+package com.tamchack.tamchack.repository.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;

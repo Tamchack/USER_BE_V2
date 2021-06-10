@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.repository;
+package com.tamchack.tamchack.repository.member;
 
 import com.tamchack.tamchack.domain.member.User;
 import org.springframework.data.jpa.repository.JpaRepository;

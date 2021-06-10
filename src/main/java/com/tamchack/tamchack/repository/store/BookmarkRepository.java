@@ -1,4 +1,4 @@
-package com.tamchack.tamchack.repository;
+package com.tamchack.tamchack.repository.store;
 
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.BookmarkKey;
