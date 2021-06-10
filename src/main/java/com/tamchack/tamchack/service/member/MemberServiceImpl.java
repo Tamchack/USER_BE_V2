@@ -1,12 +1,16 @@
 package com.tamchack.tamchack.service.member;
 
 import com.tamchack.tamchack.domain.book.Book;
-import com.tamchack.tamchack.domain.book.Stock;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.UserNotFoundException;
-import com.tamchack.tamchack.repository.*;
+import com.tamchack.tamchack.repository.book.BookRepository;
+import com.tamchack.tamchack.repository.book.StockRepository;
+import com.tamchack.tamchack.repository.member.StoreuserRepository;
+import com.tamchack.tamchack.repository.member.UserRepository;
+import com.tamchack.tamchack.repository.store.BookmarkRepository;
+import com.tamchack.tamchack.repository.store.StoreRepository;
 import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;

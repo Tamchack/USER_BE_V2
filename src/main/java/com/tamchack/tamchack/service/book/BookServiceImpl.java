@@ -2,21 +2,18 @@ package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;
-import com.tamchack.tamchack.domain.book.StockKey;
-import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
-import com.tamchack.tamchack.repository.BookRepository;
-import com.tamchack.tamchack.repository.StockRepository;
+import com.tamchack.tamchack.repository.book.BookRepository;
+import com.tamchack.tamchack.repository.book.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-import org.springframework.validation.annotation.Validated;
 
 import java.io.File;
 import java.util.ArrayList;

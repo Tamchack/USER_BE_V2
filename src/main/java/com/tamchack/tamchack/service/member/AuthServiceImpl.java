@@ -6,9 +6,8 @@ import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.dto.request.member.SignInRequest;
 import com.tamchack.tamchack.dto.response.member.TokenResponse;
-import com.tamchack.tamchack.repository.StoreuserRepository;
-import com.tamchack.tamchack.repository.UserRepository;
-import com.tamchack.tamchack.service.store.StoreServiceImpl;
+import com.tamchack.tamchack.repository.member.StoreuserRepository;
+import com.tamchack.tamchack.repository.member.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
