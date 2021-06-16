@@ -4,11 +4,14 @@ import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
+import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
 import com.tamchack.tamchack.dto.request.store.ReviseStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
+import com.tamchack.tamchack.exception.StoreNotFoundException;
 import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.store.BookmarkRepository;
+import com.tamchack.tamchack.repository.store.DeclarationStoreRepository;
 import com.tamchack.tamchack.repository.store.StoreRepository;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
 import com.tamchack.tamchack.security.token.JWTProvider;
@@ -27,6 +30,7 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
     private final StoreuserRepository storeuserRepository;
+    private final DeclarationStoreRepository declarationStoreRepository;
     private final JWTProvider jwtProvider;
 
     @Override
@@ -65,6 +69,26 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
+    public void DeclarationStore(DeclarationStoreRequest declarationStoreRequest) {
+
+        Store storeId = declarationStoreRequest.getStoreId();
+        String userId = declarationStoreRequest.getUserId();
+
+        boolean isDeclaration = declarationStoreRepository.existsByStoreAndUserId(storeId, userId);
+
+        if(isDeclaration) {
+            declarationStoreRepository.deleteByUserId(userId);
+        } else {
+            declarationStoreRepository.save(
+                    Store.builder()
+                            .userId(userId)
+                            .build()
+            );
+        }
+
+    }
+
+    @Override
     public ApplicationListResponse searchStore(String query, Pageable page) {
 
         Page<Store> storePage = storeRepository
@@ -88,6 +112,21 @@ public class StoreServiceImpl implements StoreService {
                 .totalPages(storePage.getTotalPages())
                 .applicationResponses(storeResponses)
                 .build();
+    }
+
+    @Override
+    public StoreResponse getStore(Integer storeId) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
+
+        return StoreResponse.builder()
+                .name(store.getName())
+                .address(store.getAddress())
+                .number(store.getNumber())
+                .openingHours(store.getOpeningHours())
+                .build();
+
     }
 
 }
