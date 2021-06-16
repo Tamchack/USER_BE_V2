@@ -18,6 +18,8 @@ public class BookRequest {
 
     private String publisher;
 
+    private String contents;
+
     private MultipartFile image;
 
 }
