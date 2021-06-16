@@ -20,11 +20,15 @@ public class Book {
 
     private int storeId;
 
+    private String userId;
+
     private String name;
 
     private String author;
 
     private String publisher;
+
+    private String contents;
 
     private String imageName;
 

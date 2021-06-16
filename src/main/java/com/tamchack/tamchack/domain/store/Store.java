@@ -18,6 +18,8 @@ public class Store {
     @Id
     private int id;
 
+    private String userId;
+
     private String storeuserId;
 
     private String name;
