@@ -2,11 +2,17 @@ package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
+import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
+import com.tamchack.tamchack.dto.response.store.StoreResponse;
+import com.tamchack.tamchack.exception.BookNotFoundException;
+import com.tamchack.tamchack.exception.StoreNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
+import com.tamchack.tamchack.repository.book.DeclarationBookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -26,6 +32,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
+    private final DeclarationBookRepository declarationBookRepository;
 
     @Value("${book.image.path}")
     private String imagePath;
@@ -43,11 +50,28 @@ public class BookServiceImpl implements BookService {
                         .name(bookRequest.getName())
                         .author(bookRequest.getAuthor())
                         .publisher(bookRequest.getPublisher())
+                        .contents(bookRequest.getContents())
                         .imageName(fileName)
                         .build()
         );
 
         bookRequest.getImage().transferTo(file);
+
+    }
+
+    @Override
+    public BookResponse getBook(Integer bookId) {
+
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(BookNotFoundException::new);
+
+        return BookResponse.builder()
+                .name(book.getName())
+                .author(book.getAuthor())
+                .publisher(book.getPublisher())
+                .contents(book.getContents())
+                .imageName()
+                .build();
 
     }
 
@@ -69,6 +93,26 @@ public class BookServiceImpl implements BookService {
                             .build()
             );
         }
+    }
+
+    @Override
+    public void DeclarationBook(DeclarationBookRequest declarationBookRequest) {
+
+        Book bookId = declarationBookRequest.getBookId();
+        String userId = declarationBookRequest.getUserId();
+
+        boolean isDeclaration = declarationBookRepository.existsByBookAndUserId(bookId, userId);
+
+        if(isDeclaration) {
+            declarationBookRepository.deleteByUserId(userId);
+        } else {
+            declarationBookRepository.save(
+                    Book.builder()
+                            .userId(userId)
+                            .build()
+            );
+        }
+
     }
 
     @Override

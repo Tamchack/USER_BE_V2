@@ -1,16 +1,21 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.dto.request.book.BookRequest;
+import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
-import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
+import com.tamchack.tamchack.dto.response.book.BookResponse;
 import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
     void inputBook(BookRequest bookRequest);
 
+    BookResponse getBook(Integer bookId);
+
     void bookStock(StockRequest stockRequest);
+
+    void DeclarationBook(DeclarationBookRequest declarationBookRequest);
 
     ApplicationListResponse searchBook(String query, Pageable page);
 
