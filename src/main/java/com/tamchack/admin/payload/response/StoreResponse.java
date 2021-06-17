@@ -13,6 +13,6 @@ public class StoreResponse {
 
     private String name;
 
-    private String owner;
+    private String address;
 
 }
