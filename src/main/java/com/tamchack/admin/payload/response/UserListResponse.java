@@ -1,12 +1,11 @@
 package com.tamchack.admin.payload.response;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
-
 import java.util.List;
 
 @Getter
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class UserListResponse {
 
     private int totalPages;
