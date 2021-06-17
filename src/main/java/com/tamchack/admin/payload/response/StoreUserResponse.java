@@ -13,6 +13,4 @@ public class StoreUserResponse {
 
     private String password;
 
-    private String name;
-
 }
