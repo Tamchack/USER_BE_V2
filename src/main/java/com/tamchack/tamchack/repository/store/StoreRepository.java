@@ -15,4 +15,6 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
 
     Store findByOpeningHours(String openingHours);
 
+    Page<Store> findAllBy(Pageable pageable);
+
 }
