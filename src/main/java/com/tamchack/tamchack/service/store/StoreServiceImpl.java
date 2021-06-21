@@ -99,6 +99,28 @@ public class StoreServiceImpl implements StoreService {
                 .build();
     }
 
+    @Override //메인페이지 서점 검색
+    public List<StoreResponse> searchStorePlace(double lat, double lng) {
+
+        List<Store> stores = storeRepository.findByLocation(lat, lng);
+
+        List<StoreResponse> storeResponses = new ArrayList<>();
+
+        for (Store store : stores) {
+            storeResponses.add(
+                    StoreResponse.builder()
+                            .storeId(store.getId())
+                            .name(store.getName())
+                            .lat(store.getLat())
+                            .lng(store.getLng())
+                            .build()
+            );
+        }
+
+        return storeResponses;
+
+    }
+
     @Override //서점 정보 보기
     public StoreResponse getStore(Integer storeId) {
 
