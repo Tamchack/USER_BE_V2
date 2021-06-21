@@ -2,6 +2,7 @@ package com.tamchack.tamchack.service.member;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.store.Bookmark;
+import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.UserNotFoundException;
@@ -16,7 +17,6 @@ import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.exception.UserAlreadyEsixtsException;
-import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
     private final StockRepository stockRepository;
     private final JWTProvider jwtProvider;
 
-    @Override
+    @Override //유저 회원가입
     public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
 
         userRepository.findById(userSignUpRequest.getId())
@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    @Override
+    @Override //서점 유저 회원가입
     public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest, UserSignUpRequest userSignUpRequest) {
 
         storeuserRepository.findById(storeuserSignUpRequest.getId())
@@ -92,10 +92,10 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    @Override
-    public void updateUserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
+    @Override //유저 정보 수정
+    public void updateUserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
 
-        String password = revisePasswordRequest.getPassword();
+        String password = reviseInformationRequest.getPassword();
 
         User user = userRepository.findById(jwtProvider.parseToken(token))
                 .orElseThrow(UserNotFoundException::new);
@@ -103,18 +103,25 @@ public class MemberServiceImpl implements MemberService{
         userRepository.save(user.update(password));
     }
 
-    @Override
-    public void updateStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token) {
+    @Override //서점 유저 정보 수정
+    public void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
 
-        String password = revisePasswordRequest.getPassword();
-
+        String password = reviseInformationRequest.getPassword();
+        String number = reviseInformationRequest.getStoreNumber();
+        String openingHours = reviseInformationRequest.getOpeningHours();
+        String address = reviseInformationRequest.getAddress();
+        
         Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
                 .orElseThrow(UserNotFoundException::new);
 
+        Store store = storeuser.getStore();
+
         storeuserRepository.save(storeuser.update(password));
+        storeRepository.save(store.update(number, openingHours, address));
+
     }
 
-    @Override
+    @Override //서점 유저 재고 관리
     public List<StockResponse> getStockList(Integer storeId) {
 
         List<Book> books = bookRepository.findAll();
@@ -136,7 +143,7 @@ public class MemberServiceImpl implements MemberService{
         return stockResponses;
     }
 
-    @Override
+    @Override //유저 북마크 리스트
     public List<StoreResponse> getBookmarkList(String token) {
 
         String userId = jwtProvider.parseToken(token);
