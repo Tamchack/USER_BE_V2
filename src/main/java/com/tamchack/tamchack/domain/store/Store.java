@@ -34,8 +34,9 @@ public class Store {
 
     private double lng;
 
-    public Store changeOption(String number, String openingHours) {
+    public Store update(String number, String openingHours, String address) {
         this.number = number;
+        this.address = address;
         this.openingHours = openingHours;
         return this;
     }
