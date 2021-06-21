@@ -1,6 +1,6 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.dto.request.member.RevisePasswordRequest;
+import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
@@ -14,9 +14,9 @@ public interface MemberService {
 
     void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest, UserSignUpRequest userSignUpRequest);
 
-    void updateUserPassword(RevisePasswordRequest revisePasswordRequest, String token);
+    void updateUserInformation(ReviseInformationRequest reviseInformationRequest, String token);
 
-    void updateStoreuserPassword(RevisePasswordRequest revisePasswordRequest, String token);
+    void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, String token);
 
     List<StockResponse> getStockList(Integer storeId);
 
