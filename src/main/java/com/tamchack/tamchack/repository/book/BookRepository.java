@@ -15,4 +15,6 @@ public interface BookRepository extends JpaRepository <Book, Integer> {
 
     Page<Book> findAllBy(Pageable pageable);
 
+    Page<Book> deleteAllById(Pageable pageable);
+
 }
