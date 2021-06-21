@@ -5,7 +5,7 @@ import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
-import com.tamchack.tamchack.dto.request.store.ReviseStoreRequest;
+import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.StoreNotFoundException;
@@ -33,22 +33,7 @@ public class StoreServiceImpl implements StoreService {
     private final DeclarationStoreRepository declarationStoreRepository;
     private final JWTProvider jwtProvider;
 
-    @Override
-    public void updateStoreInfo(ReviseStoreRequest reviseStoreRequest, String token) {
-
-        String number = reviseStoreRequest.getStoreNumber();
-        String openingHours = reviseStoreRequest.getOpeningHours();
-
-        Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
-                .orElseThrow(UserNotFoundException::new);
-
-        Store store = storeuser.getStore();
-
-        storeRepository.save(store.changeOption(number, openingHours));
-
-    }
-
-    @Override
+    @Override //서점 즐겨찾기
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
 
         Store storeId = bookmarkRequest.getStoreId();
@@ -68,7 +53,7 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
-    @Override
+    @Override //서점 신고하기
     public void DeclarationStore(DeclarationStoreRequest declarationStoreRequest) {
 
         Store storeId = declarationStoreRequest.getStoreId();
@@ -88,7 +73,7 @@ public class StoreServiceImpl implements StoreService {
 
     }
 
-    @Override
+    @Override //서점 검색
     public ApplicationListResponse searchStore(String query, Pageable page) {
 
         Page<Store> storePage = storeRepository
@@ -114,7 +99,7 @@ public class StoreServiceImpl implements StoreService {
                 .build();
     }
 
-    @Override
+    @Override //서점 정보 보기
     public StoreResponse getStore(Integer storeId) {
 
         Store store = storeRepository.findById(storeId)
