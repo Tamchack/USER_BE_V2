@@ -7,10 +7,16 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class RevisePasswordRequest {
+public class ReviseInformationRequest {
 
     private String id;
 
     private String password;
+
+    private String address;
+
+    private String storeNumber;
+
+    private String openingHours;
 
 }
