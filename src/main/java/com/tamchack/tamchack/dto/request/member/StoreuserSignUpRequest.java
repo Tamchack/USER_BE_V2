@@ -25,4 +25,8 @@ public class StoreuserSignUpRequest {
 
     private String storeNumber;
 
+    private double lat;
+
+    private double lng;
+
 }
