@@ -21,7 +21,7 @@ public class ImageServiceImpl implements ImageService{
     @Override
     public byte[] getImage(String imageName) {
         File file = new File(imagePath, imageName);
-        if (!file.exists()){
+        if (!file.exists()) {
             throw new ImageNotFoundException();
         }
         InputStream inputStream = new FileInputStream(file);
