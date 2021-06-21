@@ -9,7 +9,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
-    void inputBook(BookRequest bookRequest);
+    void inputBook(BookRequest bookRequest, String token);
 
     BookResponse getBook(Integer bookId);
 

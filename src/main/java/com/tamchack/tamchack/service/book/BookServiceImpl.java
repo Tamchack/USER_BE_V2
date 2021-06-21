@@ -2,6 +2,8 @@ package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;
+import com.tamchack.tamchack.domain.member.Storeuser;
+import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
 import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
@@ -11,9 +13,14 @@ import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.BookNotFoundException;
 import com.tamchack.tamchack.exception.StoreNotFoundException;
+import com.tamchack.tamchack.exception.UserAlreadyEsixtsException;
+import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
 import com.tamchack.tamchack.repository.book.DeclarationBookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
+import com.tamchack.tamchack.repository.member.StoreuserRepository;
+import com.tamchack.tamchack.repository.member.UserRepository;
+import com.tamchack.tamchack.security.token.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,14 +39,21 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
+    private final UserRepository userRepository;
+    private final StoreuserRepository storeuserRepository;
     private final DeclarationBookRepository declarationBookRepository;
-
-    @Value("${book.image.path}")
-    private String imagePath;
+    private final JWTProvider jwtProvider;
 
     @SneakyThrows
-    @Override
-    public void inputBook(BookRequest bookRequest) {
+    @Override //책 등록
+    public void inputBook(BookRequest bookRequest, String token) {
+
+        User user = userRepository.findById(jwtProvider.parseToken(token))
+                .orElseThrow(UserNotFoundException::new);
+
+        Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
+                .orElseThrow(UserNotFoundException::new);
+
 
         String fileName = UUID.randomUUID().toString();
 
@@ -59,7 +73,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override
+    @Override //책 상세보기
     public BookResponse getBook(Integer bookId) {
 
         Book book = bookRepository.findById(bookId)
@@ -75,7 +89,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override
+    @Override //서점 책 재고
     public void bookStock(StockRequest stockRequest) {
 
         Book book = stockRequest.getBookId();
@@ -95,7 +109,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    @Override
+    @Override //책 신고
     public void DeclarationBook(DeclarationBookRequest declarationBookRequest) {
 
         Book bookId = declarationBookRequest.getBookId();
@@ -115,13 +129,13 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override
+    @Override //책 검색(메인)
     public ApplicationListResponse searchBook(String query, Pageable page) {
         return getApplications(bookRepository
                 .findAllByNameContains(query, page));
     }
 
-    @Override
+    @Override //서점 정보 내 책 검색
     public ApplicationListResponse searchBookInStore(Integer storeId, String query, Pageable page) {
         return getApplications(bookRepository
                 .findAllByStoreIdAndNameContains(storeId, query, page));
