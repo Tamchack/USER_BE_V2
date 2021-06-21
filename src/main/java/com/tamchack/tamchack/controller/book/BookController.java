@@ -20,14 +20,7 @@ public class BookController {
                           @RequestParam String author,
                           @RequestParam String publisher,
                           @RequestParam MultipartFile image){
-        bookService.inputBook(
-                BookRequest.builder()
-                        .name(name)
-                        .author(author)
-                        .publisher(publisher)
-                        .image(image)
-                        .build()
-        );
+        bookService.inputBook()
     }
 
     @GetMapping("/search")
