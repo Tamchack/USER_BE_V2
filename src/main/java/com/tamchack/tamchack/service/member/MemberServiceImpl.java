@@ -16,7 +16,7 @@ import com.tamchack.tamchack.security.token.JWTProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
-import com.tamchack.tamchack.exception.UserAlreadyEsixtsException;
+import com.tamchack.tamchack.exception.UserAlreadyExistsException;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
@@ -42,12 +42,12 @@ public class MemberServiceImpl implements MemberService{
 
         userRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
-                    throw new UserAlreadyEsixtsException();
+                    throw new UserAlreadyExistsException();
                 });
 
         storeuserRepository.findById(storeuserSignUpRequest.getId())
                 .ifPresent(u -> {
-                    throw new UserAlreadyEsixtsException();
+                    throw new UserAlreadyExistsException();
                 });
 
         userRepository.save(
@@ -65,12 +65,12 @@ public class MemberServiceImpl implements MemberService{
 
         storeuserRepository.findById(storeuserSignUpRequest.getId())
                 .ifPresent(u -> {
-                    throw new UserAlreadyEsixtsException();
+                    throw new UserAlreadyExistsException();
                 });
 
         userRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
-                    throw new UserAlreadyEsixtsException();
+                    throw new UserAlreadyExistsException();
                 });
 
         storeuserRepository.save(
@@ -87,6 +87,8 @@ public class MemberServiceImpl implements MemberService{
                         .address(storeuserSignUpRequest.getStoreAddress())
                         .number(storeuserSignUpRequest.getStoreNumber())
                         .openingHours(storeuserSignUpRequest.getOpeningHours())
+                        .lat(storeuserSignUpRequest.getLat())
+                        .lng(storeuserSignUpRequest.getLng())
                         .build()
         );
 
