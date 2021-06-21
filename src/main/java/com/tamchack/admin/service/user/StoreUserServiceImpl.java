@@ -5,8 +5,11 @@ import com.tamchack.admin.payload.response.StoreUserResponse;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+
+import java.util.stream.Collectors;
 
 @Service
 @AllArgsConstructor
@@ -16,7 +19,11 @@ public class StoreUserServiceImpl implements StoreUserService {
 
     @Override
     public StoreUserListResponse getListUser(Pageable pageable) {
-        return null;
+        Page<Storeuser> stores = storeuserRepository.findAllBy(pageable);
+
+        return new StoreUserListResponse(stores.getTotalPages(),
+                stores.map(this::buildStore)
+                        .stream().collect(Collectors.toList()));
     }
 
     private StoreUserResponse buildStore(Storeuser storeuser) {
