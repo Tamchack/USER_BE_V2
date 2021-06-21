@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @NoArgsConstructor
@@ -22,6 +21,6 @@ public class BookResponse {
 
     private String contents;
 
-    private MultipartFile imageName;
+    private String imageName;
 
 }
