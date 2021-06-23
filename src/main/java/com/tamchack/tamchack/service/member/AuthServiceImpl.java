@@ -19,7 +19,7 @@ public class AuthServiceImpl implements AuthService {
     private final StoreuserRepository storeuserRepository;
     private final JWTProvider jwtProvider;
 
-    @Override //유저 로그인
+    @Override
     public TokenResponse userSignIn(SignInRequest signInRequest) {
 
         String id = signInRequest.getId();
@@ -31,7 +31,7 @@ public class AuthServiceImpl implements AuthService {
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    @Override //서점 유저 로그인
+    @Override
     public TokenResponse storeuserSignIn(SignInRequest signInRequest) {
 
         String id = signInRequest.getId();
