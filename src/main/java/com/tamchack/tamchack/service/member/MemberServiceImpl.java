@@ -37,7 +37,7 @@ public class MemberServiceImpl implements MemberService{
     private final StockRepository stockRepository;
     private final JWTProvider jwtProvider;
 
-    @Override //유저 회원가입
+    @Override
     public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
 
         userRepository.findById(userSignUpRequest.getId())
@@ -60,7 +60,7 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    @Override //서점 유저 회원가입
+    @Override
     public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest, UserSignUpRequest userSignUpRequest) {
 
         storeuserRepository.findById(storeuserSignUpRequest.getId())
@@ -94,7 +94,7 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    @Override //유저 정보 수정
+    @Override
     public void updateUserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
 
         String password = reviseInformationRequest.getPassword();
@@ -105,7 +105,7 @@ public class MemberServiceImpl implements MemberService{
         userRepository.save(user.update(password));
     }
 
-    @Override //서점 유저 정보 수정
+    @Override
     public void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
 
         String password = reviseInformationRequest.getPassword();
@@ -123,7 +123,7 @@ public class MemberServiceImpl implements MemberService{
 
     }
 
-    @Override //서점 유저 재고 관리
+    @Override
     public List<StockResponse> getStockList(Integer storeId) {
 
         List<Book> books = bookRepository.findAll();
@@ -145,7 +145,7 @@ public class MemberServiceImpl implements MemberService{
         return stockResponses;
     }
 
-    @Override //유저 북마크 리스트
+    @Override
     public List<StoreResponse> getBookmarkList(String token) {
 
         String userId = jwtProvider.parseToken(token);
