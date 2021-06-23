@@ -29,11 +29,9 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
-    private final StoreuserRepository storeuserRepository;
     private final DeclarationStoreRepository declarationStoreRepository;
-    private final JWTProvider jwtProvider;
 
-    @Override //서점 즐겨찾기
+    @Override
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
 
         Store storeId = bookmarkRequest.getStoreId();
@@ -53,7 +51,7 @@ public class StoreServiceImpl implements StoreService {
         }
     }
 
-    @Override //서점 신고하기
+    @Override
     public void DeclarationStore(DeclarationStoreRequest declarationStoreRequest) {
 
         Store storeId = declarationStoreRequest.getStoreId();
@@ -73,7 +71,7 @@ public class StoreServiceImpl implements StoreService {
 
     }
 
-    @Override //서점 검색
+    @Override
     public ApplicationListResponse searchStore(String query, Pageable page) {
 
         Page<Store> storePage = storeRepository
@@ -99,7 +97,7 @@ public class StoreServiceImpl implements StoreService {
                 .build();
     }
 
-    @Override //메인페이지 서점 검색
+    @Override
     public List<StoreResponse> searchStorePlace(double lat, double lng) {
 
         List<Store> stores = storeRepository.findByLocation(lat, lng);
@@ -121,7 +119,7 @@ public class StoreServiceImpl implements StoreService {
 
     }
 
-    @Override //서점 정보 보기
+    @Override
     public StoreResponse getStore(Integer storeId) {
 
         Store store = storeRepository.findById(storeId)
