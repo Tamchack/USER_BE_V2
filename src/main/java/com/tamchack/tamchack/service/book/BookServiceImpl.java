@@ -50,7 +50,7 @@ public class BookServiceImpl implements BookService {
     private String imagePath;
 
     @SneakyThrows
-    @Override //책 등록
+    @Override
     public void inputBook(BookRequest bookRequest, String name, String token) {
 
         User user = userRepository.findById(jwtProvider.parseToken(token))
@@ -80,7 +80,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override //책 상세보기
+    @Override
     public BookResponse getBook(Integer bookId) {
 
         Book book = bookRepository.findById(bookId)
@@ -96,7 +96,7 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override //서점 책 재고
+    @Override
     public void bookStock(StockRequest stockRequest) {
 
         Book book = stockRequest.getBookId();
@@ -116,7 +116,7 @@ public class BookServiceImpl implements BookService {
         }
     }
 
-    @Override //책 신고
+    @Override
     public void DeclarationBook(DeclarationBookRequest declarationBookRequest) {
 
         Book bookId = declarationBookRequest.getBookId();
@@ -136,13 +136,13 @@ public class BookServiceImpl implements BookService {
 
     }
 
-    @Override //책 검색(메인)
+    @Override
     public ApplicationListResponse searchBook(String query, Pageable page) {
         return getApplications(bookRepository
                 .findAllByNameContains(query, page));
     }
 
-    @Override //서점 정보 내 책 검색
+    @Override
     public ApplicationListResponse searchBookInStore(Integer storeId, String query, Pageable page) {
         return getApplications(bookRepository
                 .findAllByStoreIdAndNameContains(storeId, query, page));
