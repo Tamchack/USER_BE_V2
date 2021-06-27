@@ -1,7 +1,6 @@
 package com.tamchack.tamchack.repository.book;
 
 import com.tamchack.tamchack.domain.book.Book;
-import com.tamchack.tamchack.domain.store.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface DeclarationBookRepository extends JpaRepository<Book, Integer> {
