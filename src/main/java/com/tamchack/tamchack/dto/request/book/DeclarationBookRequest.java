@@ -15,4 +15,6 @@ public class DeclarationBookRequest {
     private Book bookId;
 
     private String userId;
+
+    private String token;
 }
