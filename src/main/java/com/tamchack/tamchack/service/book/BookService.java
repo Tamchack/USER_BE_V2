@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.service.book;
 
+import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
 import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 
 public interface BookService {
 
-    void inputBook(BookRequest bookRequest, String name, String token);
+    void inputBook(BookRequest bookRequest, Book bookName);
 
     BookResponse getBook(Integer bookId);
 
