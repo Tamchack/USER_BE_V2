@@ -1,6 +1,6 @@
 package com.tamchack.tamchack.service.member;
 
-import com.tamchack.tamchack.security.token.JWTProvider;
+import com.tamchack.tamchack.security.token.JwtProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.exception.UserNotFoundException;
@@ -17,7 +17,7 @@ public class AuthServiceImpl implements AuthService {
 
     private final UserRepository userRepository;
     private final StoreuserRepository storeuserRepository;
-    private final JWTProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Override
     public TokenResponse userSignIn(SignInRequest signInRequest) {
@@ -26,8 +26,7 @@ public class AuthServiceImpl implements AuthService {
         String password = signInRequest.getPassword();
 
         return userRepository.findByIdAndPassword(id, password)
-                .map(User::getId)
-                .map(this::createTokenResponse)
+                .map(user -> createTokenResponse(user.getId(), "user"))
                 .orElseThrow(UserNotFoundException::new);
     }
 
@@ -38,16 +37,14 @@ public class AuthServiceImpl implements AuthService {
         String password = signInRequest.getPassword();
 
         return storeuserRepository.findByIdAndPassword(id, password)
-                .map(Storeuser::getId)
-                .map(this::createTokenResponse)
+                .map(storeuser -> createTokenResponse(storeuser.getId(), "storeUser"))
                 .orElseThrow(UserNotFoundException::new);
     }
 
-    private TokenResponse createTokenResponse(String id) {
+    private TokenResponse createTokenResponse(String id, String userType) {
 
-        String accessToken = jwtProvider.getAccessToken(id);
-
-        String refreshToken = jwtProvider.getRefreshToken(id);
+        String accessToken = jwtProvider.getAccessToken(id, userType);
+        String refreshToken = jwtProvider.getRefreshToken(id, userType);
 
         return new TokenResponse(accessToken, refreshToken);
     }

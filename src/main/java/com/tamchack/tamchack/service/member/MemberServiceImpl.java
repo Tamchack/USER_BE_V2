@@ -12,7 +12,7 @@ import com.tamchack.tamchack.repository.member.StoreuserRepository;
 import com.tamchack.tamchack.repository.member.UserRepository;
 import com.tamchack.tamchack.repository.store.BookmarkRepository;
 import com.tamchack.tamchack.repository.store.StoreRepository;
-import com.tamchack.tamchack.security.token.JWTProvider;
+import com.tamchack.tamchack.security.token.JwtProvider;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Store;
@@ -35,7 +35,7 @@ public class MemberServiceImpl implements MemberService{
     private final BookmarkRepository bookmarkRepository;
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
-    private final JWTProvider jwtProvider;
+    private final JwtProvider jwtProvider;
 
     @Override
     public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
@@ -61,14 +61,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest, UserSignUpRequest userSignUpRequest) {
+    public void storeuserSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
 
-        storeuserRepository.findById(storeuserSignUpRequest.getId())
+        userRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException();
                 });
 
-        userRepository.findById(userSignUpRequest.getId())
+        storeuserRepository.findById(storeuserSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException();
                 });
@@ -95,26 +95,21 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void updateUserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
+    public void updateUserInformation(ReviseInformationRequest reviseInformationRequest, User user) {
 
         String password = reviseInformationRequest.getPassword();
-
-        User user = userRepository.findById(jwtProvider.parseToken(token))
-                .orElseThrow(UserNotFoundException::new);
 
         userRepository.save(user.update(password));
     }
 
     @Override
-    public void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, String token) {
+    public void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, Storeuser storeuser) {
 
         String password = reviseInformationRequest.getPassword();
+
         String number = reviseInformationRequest.getStoreNumber();
         String openingHours = reviseInformationRequest.getOpeningHours();
         String address = reviseInformationRequest.getAddress();
-        
-        Storeuser storeuser = storeuserRepository.findById(jwtProvider.parseToken(token))
-                .orElseThrow(UserNotFoundException::new);
 
         Store store = storeuser.getStore();
 
