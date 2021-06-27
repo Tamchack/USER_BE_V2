@@ -1,20 +1,15 @@
 package com.tamchack.tamchack.service.store;
 
-import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
-import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.StoreNotFoundException;
-import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.store.BookmarkRepository;
 import com.tamchack.tamchack.repository.store.DeclarationStoreRepository;
 import com.tamchack.tamchack.repository.store.StoreRepository;
-import com.tamchack.tamchack.repository.member.StoreuserRepository;
-import com.tamchack.tamchack.security.token.JWTProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -30,6 +25,21 @@ public class StoreServiceImpl implements StoreService {
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
     private final DeclarationStoreRepository declarationStoreRepository;
+
+    @Override
+    public StoreResponse getStore(Integer storeId) {
+
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
+
+        return StoreResponse.builder()
+                .name(store.getName())
+                .address(store.getAddress())
+                .number(store.getNumber())
+                .openingHours(store.getOpeningHours())
+                .build();
+
+    }
 
     @Override
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
@@ -116,21 +126,6 @@ public class StoreServiceImpl implements StoreService {
         }
 
         return storeResponses;
-
-    }
-
-    @Override
-    public StoreResponse getStore(Integer storeId) {
-
-        Store store = storeRepository.findById(storeId)
-                .orElseThrow(StoreNotFoundException::new);
-
-        return StoreResponse.builder()
-                .name(store.getName())
-                .address(store.getAddress())
-                .number(store.getNumber())
-                .openingHours(store.getOpeningHours())
-                .build();
 
     }
 
