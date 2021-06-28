@@ -4,9 +4,11 @@ import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.BookmarkKey;
 import com.tamchack.tamchack.domain.store.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, BookmarkKey> {
 
     boolean existsByStoreAndUserId(Store storeId, String userId);
