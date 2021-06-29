@@ -14,7 +14,7 @@ import java.io.InputStream;
 public class ImageServiceImpl implements ImageService{
 
 
-    @Value("${book.image.path}")
+    @Value("${image.upload.dir}")
     private String imagePath;
 
     @SneakyThrows
