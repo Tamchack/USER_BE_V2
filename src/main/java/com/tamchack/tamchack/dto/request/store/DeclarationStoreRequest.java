@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeclarationStoreRequest {
 
-    private Store storeId;
+    private int storeId;
 
     private String userId;
 
