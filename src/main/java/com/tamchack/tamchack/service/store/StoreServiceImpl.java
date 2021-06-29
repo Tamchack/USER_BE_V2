@@ -7,8 +7,8 @@ import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.StoreNotFoundException;
+import com.tamchack.tamchack.repository.member.StoreuserRepository;
 import com.tamchack.tamchack.repository.store.BookmarkRepository;
-import com.tamchack.tamchack.repository.store.DeclarationStoreRepository;
 import com.tamchack.tamchack.repository.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -24,7 +24,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
-    private final DeclarationStoreRepository declarationStoreRepository;
+    private final StoreuserRepository storeuserRepository;
 
     @Override
     public StoreResponse getStore(Integer storeId) {
@@ -62,20 +62,16 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public void DeclarationStore(DeclarationStoreRequest declarationStoreRequest) {
+    public void declarationStore(DeclarationStoreRequest declarationStoreRequest) {
 
-        Store storeId = declarationStoreRequest.getStoreId();
-        String userId = declarationStoreRequest.getUserId();
+        int storeId = declarationStoreRequest.getStoreId();
 
-        boolean isDeclaration = declarationStoreRepository.existsByStoreAndUserId(storeId, userId);
+        Store store = storeRepository.findById(storeId)
+                .orElseThrow(StoreNotFoundException::new);
 
-        if(isDeclaration) {
-            declarationStoreRepository.deleteByUserId(userId);
-        } else {
-            declarationStoreRepository.save(
-                    Store.builder()
-                            .userId(userId)
-                            .build()
+        if(!store.isDeclaration()) {
+            storeRepository.save(
+                    store.setDeclaration(true)
             );
         }
 
