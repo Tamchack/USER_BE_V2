@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.service.store;
 
+import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
@@ -14,7 +15,7 @@ public interface StoreService {
 
     void bookmarkStore(BookmarkRequest bookmarkRequest);
 
-    void DeclarationStore(DeclarationStoreRequest declarationStoreRequest);
+    void declarationStore(DeclarationStoreRequest declarationStoreRequest);
 
     ApplicationListResponse searchStore(String query, Pageable page);
 
