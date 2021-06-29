@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.domain.book;
 
+import com.tamchack.tamchack.domain.store.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -31,5 +32,12 @@ public class Book {
     private String contents;
 
     private String imageName;
+
+    private boolean declaration;
+
+    public Book setDeclaration(boolean declaration) {
+        this.declaration = declaration;
+        return this;
+    }
 
 }
