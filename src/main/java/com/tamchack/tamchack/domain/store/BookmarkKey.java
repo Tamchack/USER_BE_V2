@@ -9,6 +9,6 @@ public class BookmarkKey implements Serializable {
 
     private String userId;
 
-    private int storeId;
+    private int store;
 
 }
