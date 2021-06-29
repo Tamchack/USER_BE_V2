@@ -11,7 +11,6 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.*;
 
-import javax.websocket.server.PathParam;
 import java.util.List;
 
 @RestController
@@ -32,7 +31,7 @@ public class StoreController {
     @DeleteMapping("/{storeId}")
     public void DeclarationStore(@RequestBody DeclarationStoreRequest declarationStoreRequest) {
 
-        storeService.DeclarationStore(declarationStoreRequest);
+        storeService.declarationStore(declarationStoreRequest);
 
     }
 
@@ -57,7 +56,7 @@ public class StoreController {
 
     }
 
-    @GetMapping("/{storeId}")
+    @GetMapping("/{storeId}/search")
     public ApplicationListResponse searchBookInStore(@RequestBody Integer storeId,
                                                      @RequestBody String query,
                                                      @PageableDefault Pageable page) {
