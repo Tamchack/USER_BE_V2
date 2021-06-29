@@ -2,6 +2,7 @@ package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
 import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
@@ -9,8 +10,8 @@ import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.exception.BookAlreadyExistsException;
 import com.tamchack.tamchack.exception.BookNotFoundException;
+import com.tamchack.tamchack.exception.StoreNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
-import com.tamchack.tamchack.repository.book.DeclarationBookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -30,9 +31,8 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
-    private final DeclarationBookRepository declarationBookRepository;
 
-    @Value("${book.image.path}")
+    @Value("${image.upload.dir}")
     private String imagePath;
 
     @SneakyThrows
@@ -99,23 +99,16 @@ public class BookServiceImpl implements BookService {
     @Override
     public void DeclarationBook(DeclarationBookRequest declarationBookRequest) {
 
-        String token = declarationBookRequest.getToken();
+        int bookId = declarationBookRequest.getBookId();
 
-        Book bookId = declarationBookRequest.getBookId();
-        String userId = declarationBookRequest.getUserId();
+        Book book = bookRepository.findById(bookId)
+                .orElseThrow(BookNotFoundException::new);
 
-        boolean isDeclaration = declarationBookRepository.existsByBookAndUserId(bookId, userId);
-
-        if(isDeclaration) {
-            declarationBookRepository.deleteByUserId(userId);
-        } else {
-            declarationBookRepository.save(
-                    Book.builder()
-                            .userId(userId)
-                            .build()
+        if(!book.isDeclaration()) {
+            bookRepository.save(
+                    book.setDeclaration(true)
             );
         }
-
     }
 
     @Override
