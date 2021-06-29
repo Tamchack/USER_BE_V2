@@ -6,10 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity(name = "tbl_storeuser")
 @Getter
@@ -23,7 +20,8 @@ public class Storeuser {
 
     private String password;
 
-    @OneToOne(mappedBy = "id")
+    @JoinColumn(name = "store_id")
+    @OneToOne(mappedBy = "storeuser")
     private Store store;
 
     public Storeuser update(String password) {
