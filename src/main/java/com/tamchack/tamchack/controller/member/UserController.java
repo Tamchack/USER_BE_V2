@@ -27,7 +27,7 @@ public class UserController {
 
     }
 
-    @PostMapping
+    @PutMapping
     public void updateUserInformation(@RequestBody ReviseInformationRequest reviseInformationRequest,
                                       @AuthenticationPrincipal User user) {
 
