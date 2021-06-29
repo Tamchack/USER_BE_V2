@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class DeclarationBookRequest {
 
-    private Book bookId;
+    private int bookId;
 
     private String userId;
 
