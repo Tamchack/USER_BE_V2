@@ -20,6 +20,7 @@ import com.tamchack.tamchack.exception.UserAlreadyExistsException;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -37,6 +38,8 @@ public class MemberServiceImpl implements MemberService{
     private final StockRepository stockRepository;
     private final JwtProvider jwtProvider;
 
+    private final PasswordEncoder passwordEncoder;
+
     @Override
     public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
 
@@ -53,7 +56,7 @@ public class MemberServiceImpl implements MemberService{
         userRepository.save(
                 User.builder()
                         .id(userSignUpRequest.getId())
-                        .password(userSignUpRequest.getPassword())
+                        .password(passwordEncoder.encode(userSignUpRequest.getPassword()))
                         .name(userSignUpRequest.getName())
                         .build()
         );
@@ -76,7 +79,7 @@ public class MemberServiceImpl implements MemberService{
         storeuserRepository.save(
                 Storeuser.builder()
                             .id(storeuserSignUpRequest.getId())
-                            .password(storeuserSignUpRequest.getPassword())
+                            .password(passwordEncoder.encode(storeuserSignUpRequest.getPassword()))
                             .build()
         );
 
