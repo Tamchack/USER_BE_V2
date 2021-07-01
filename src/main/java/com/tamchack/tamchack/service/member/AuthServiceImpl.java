@@ -18,25 +18,21 @@ public class AuthServiceImpl implements AuthService {
     private final JwtProvider jwtProvider;
 
     @Override
-    public TokenResponse userSignIn(SignInRequest signInRequest) {
+    public TokenResponse signIn(SignInRequest signInRequest) {
 
         String id = signInRequest.getId();
         String password = signInRequest.getPassword();
 
-        return userRepository.findByIdAndPassword(id, password)
-                .map(user -> createTokenResponse(user.getId(), "user"))
-                .orElseThrow(UserNotFoundException::new);
-    }
+        if(userRepository.findById(id).isEmpty()) {
+            return userRepository.findByIdAndPassword(id, password)
+                    .map(user -> createTokenResponse(user.getId(), "user"))
+                    .orElseThrow(UserNotFoundException::new);
+        } else {
+            return storeuserRepository.findByIdAndPassword(id, password)
+                    .map(storeuser -> createTokenResponse(storeuser.getId(), "storeUser"))
+                    .orElseThrow(UserNotFoundException::new);
+        }
 
-    @Override
-    public TokenResponse storeuserSignIn(SignInRequest signInRequest) {
-
-        String id = signInRequest.getId();
-        String password = signInRequest.getPassword();
-
-        return storeuserRepository.findByIdAndPassword(id, password)
-                .map(storeuser -> createTokenResponse(storeuser.getId(), "storeUser"))
-                .orElseThrow(UserNotFoundException::new);
     }
 
     private TokenResponse createTokenResponse(String id, String userType) {
