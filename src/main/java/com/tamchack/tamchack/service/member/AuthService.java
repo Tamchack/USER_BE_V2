@@ -5,8 +5,6 @@ import com.tamchack.tamchack.dto.response.member.TokenResponse;
 
 public interface AuthService {
 
-    TokenResponse userSignIn(SignInRequest signInRequest);
-
-    TokenResponse storeuserSignIn(SignInRequest signInRequest);
+    TokenResponse signIn(SignInRequest signInRequest);
 
 }
