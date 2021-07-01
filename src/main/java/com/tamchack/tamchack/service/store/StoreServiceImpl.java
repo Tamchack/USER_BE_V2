@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.service.store;
 
+import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
@@ -44,18 +45,18 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
 
-        Store storeId = bookmarkRequest.getStoreId();
-        String userId = bookmarkRequest.getUserId();
+        Store store = bookmarkRequest.getStoreId();
+        User user = bookmarkRequest.getUserId();
 
-        boolean isBookmarked = bookmarkRepository.existsByStoreAndUserId(storeId, userId);
+        boolean isBookmarked = bookmarkRepository.existsByStoreAndUser(store, user);
 
         if(isBookmarked) {
-            bookmarkRepository.deleteByStoreAndUserId(storeId, userId);
+            bookmarkRepository.deleteByStoreAndUser(store, user);
         } else {
             bookmarkRepository.save(
                     Bookmark.builder()
-                            .store(storeId)
-                            .userId(userId)
+                            .store(store)
+                            .user(user)
                             .build()
             );
         }
