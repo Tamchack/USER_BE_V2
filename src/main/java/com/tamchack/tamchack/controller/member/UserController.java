@@ -2,7 +2,6 @@ package com.tamchack.tamchack.controller.member;
 
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
-import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.service.member.MemberService;
@@ -20,14 +19,13 @@ public class UserController {
     private final MemberService memberService;
 
     @PostMapping
-    public void userSignUp(@RequestBody UserSignUpRequest userSignUpRequest,
-                           @RequestBody StoreuserSignUpRequest storeuserSignUpRequest) {
+    public void userSignUp(@RequestBody UserSignUpRequest userSignUpRequest) {
 
-        memberService.userSignUp(userSignUpRequest, storeuserSignUpRequest);
+        memberService.userSignUp(userSignUpRequest);
 
     }
 
-    @PutMapping
+    @PutMapping("/update")
     public void updateUserInformation(@RequestBody ReviseInformationRequest reviseInformationRequest,
                                       @AuthenticationPrincipal User user) {
 
@@ -35,13 +33,11 @@ public class UserController {
 
     }
 
-    @GetMapping
-    public List<StoreResponse> getBookmarkList(@RequestBody String token) {
+    @GetMapping("/{userId}")
+    public List<StoreResponse> getBookmarkList(@AuthenticationPrincipal User user) {
 
-       return memberService.getBookmarkList(token);
+       return memberService.getBookmarkList(user);
 
     }
-
-
 
 }
