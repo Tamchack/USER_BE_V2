@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.repository.store;
 
+import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.BookmarkKey;
 import com.tamchack.tamchack.domain.store.Store;
@@ -11,10 +12,10 @@ import java.util.List;
 @Repository
 public interface BookmarkRepository extends JpaRepository<Bookmark, BookmarkKey> {
 
-    boolean existsByStoreAndUserId(Store storeId, String userId);
+    boolean existsByStoreAndUser(Store store, User user);
 
-    void deleteByStoreAndUserId(Store storeId, String userId);
+    void deleteByStoreAndUser(Store store, User user);
 
-    List<Bookmark> findAllByUserId(String userId);
+    List<Bookmark> findAllByUser(User user);
 
 }
