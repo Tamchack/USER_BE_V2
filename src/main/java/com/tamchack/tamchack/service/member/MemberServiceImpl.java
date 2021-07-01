@@ -5,7 +5,6 @@ import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
-import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
@@ -41,14 +40,14 @@ public class MemberServiceImpl implements MemberService{
     private final PasswordEncoder passwordEncoder;
 
     @Override
-    public void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
+    public void userSignUp(UserSignUpRequest userSignUpRequest) {
 
         userRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException();
                 });
 
-        storeuserRepository.findById(storeuserSignUpRequest.getId())
+        storeuserRepository.findById(userSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException();
                 });
@@ -64,9 +63,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void storeuserSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest) {
+    public void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest) {
 
-        userRepository.findById(userSignUpRequest.getId())
+        userRepository.findById(storeuserSignUpRequest.getId())
                 .ifPresent(u -> {
                     throw new UserAlreadyExistsException();
                 });
@@ -76,22 +75,23 @@ public class MemberServiceImpl implements MemberService{
                     throw new UserAlreadyExistsException();
                 });
 
-        storeuserRepository.save(
-                Storeuser.builder()
-                            .id(storeuserSignUpRequest.getId())
-                            .password(passwordEncoder.encode(storeuserSignUpRequest.getPassword()))
-                            .build()
-        );
-
-        storeRepository.save(
+        Store store = storeRepository.save(
                 Store.builder()
                         .id(storeuserSignUpRequest.getStoreId())
-                        .name(storeuserSignUpRequest.getStoreName())
-                        .address(storeuserSignUpRequest.getStoreAddress())
-                        .number(storeuserSignUpRequest.getStoreNumber())
+                        .name(storeuserSignUpRequest.getName())
+                        .address(storeuserSignUpRequest.getAddress())
+                        .number(storeuserSignUpRequest.getNumber())
                         .openingHours(storeuserSignUpRequest.getOpeningHours())
                         .lat(storeuserSignUpRequest.getLat())
                         .lng(storeuserSignUpRequest.getLng())
+                        .build()
+        );
+
+        storeuserRepository.save(
+                Storeuser.builder()
+                        .id(storeuserSignUpRequest.getId())
+                        .password(passwordEncoder.encode(storeuserSignUpRequest.getPassword()))
+                        .store(store)
                         .build()
         );
 
@@ -122,14 +122,14 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<StockResponse> getStockList(Integer storeId) {
+    public List<StockResponse> getStockList(Store store) {
 
         List<Book> books = bookRepository.findAll();
 
         List<StockResponse> stockResponses = new ArrayList<>();
 
         for(Book book : books){
-            boolean stock = stockRepository.existsByStoreIdAndBook(storeId, book);
+            boolean stock = stockRepository.existsByStoreAndBook(store, book);
             stockResponses.add(
                     StockResponse.builder()
                             .bookName(book.getName())
@@ -144,11 +144,9 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public List<StoreResponse> getBookmarkList(String token) {
+    public List<StoreResponse> getBookmarkList(User user) {
 
-        String userId = jwtProvider.parseToken(token);
-
-        List<Bookmark> bookmarks = bookmarkRepository.findAllByUserId(userId);
+        List<Bookmark> bookmarks = bookmarkRepository.findAllByUser(user);
 
         List<StoreResponse> storeResponses = new ArrayList<>();
 
