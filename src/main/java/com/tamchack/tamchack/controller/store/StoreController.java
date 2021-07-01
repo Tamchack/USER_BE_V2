@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.controller.store;
 
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
 import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
