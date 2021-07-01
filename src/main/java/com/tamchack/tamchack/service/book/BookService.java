@@ -1,6 +1,7 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
 import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
