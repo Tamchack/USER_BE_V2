@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class StockRequest {
 
-    private int storeId;
+    private Store storeId;
 
     private Book bookId;
 
