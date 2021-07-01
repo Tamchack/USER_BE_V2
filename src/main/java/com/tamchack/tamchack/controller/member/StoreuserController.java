@@ -1,9 +1,9 @@
 package com.tamchack.tamchack.controller.member;
 
 import com.tamchack.tamchack.domain.member.Storeuser;
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
-import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.service.member.MemberService;
 import lombok.RequiredArgsConstructor;
@@ -20,10 +20,9 @@ public class StoreuserController {
     private final MemberService memberService;
 
     @PostMapping
-    public void storeuserSignUp(@RequestBody UserSignUpRequest userSignUpRequest,
-                                @RequestBody StoreuserSignUpRequest storeuserSignUpRequest) {
+    public void storeuserSignUp(@RequestBody StoreuserSignUpRequest storeuserSignUpRequest) {
 
-        memberService.storeuserSignUp(userSignUpRequest, storeuserSignUpRequest);
+        memberService.storeuserSignUp(storeuserSignUpRequest);
     }
 
     @PostMapping("/update")
@@ -35,9 +34,9 @@ public class StoreuserController {
     }
 
     @PutMapping("/stock")
-    public List<StockResponse> getStockList(@RequestBody Integer storeId) {
+    public List<StockResponse> getStockList(@RequestBody Store store) {
 
-        return memberService.getStockList(storeId);
+        return memberService.getStockList(store);
 
     }
 
