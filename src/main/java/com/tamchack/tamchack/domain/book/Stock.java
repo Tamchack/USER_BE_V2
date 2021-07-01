@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.domain.book;
 
+import com.tamchack.tamchack.domain.store.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,11 +17,13 @@ import javax.persistence.*;
 public class Stock {
 
     @Id
-    private int storeId;
+    @OneToOne
+    @JoinColumn(name = "store_id")
+    private Store store;
 
     @Id
     @ManyToOne
-    @JoinColumn(name = "book_id", referencedColumnName = "id")
+    @JoinColumn(name = "book_id")
     private Book book;
 
 }
