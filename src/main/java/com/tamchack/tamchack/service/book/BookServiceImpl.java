@@ -10,7 +10,6 @@ import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.exception.BookAlreadyExistsException;
 import com.tamchack.tamchack.exception.BookNotFoundException;
-import com.tamchack.tamchack.exception.StoreNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
 import lombok.RequiredArgsConstructor;
@@ -80,17 +79,17 @@ public class BookServiceImpl implements BookService {
     public void bookStock(StockRequest stockRequest) {
 
         Book book = stockRequest.getBookId();
-        int storeId = stockRequest.getStoreId();
+        Store store = stockRequest.getStoreId();
 
-        boolean isStocked = stockRepository.existsByStoreIdAndBook(storeId, book);
+        boolean isStocked = stockRepository.existsByStoreAndBook(store, book);
 
         if(isStocked) {
-            stockRepository.deleteByStoreIdAndBook(storeId, book);
+            stockRepository.deleteByStoreAndBook(store, book);
         } else {
             stockRepository.save(
                     Stock.builder()
                             .book(book)
-                            .storeId(storeId)
+                            .store(store)
                             .build()
             );
         }
@@ -119,8 +118,10 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public ApplicationListResponse searchBookInStore(Integer storeId, String query, Pageable page) {
+
         return getApplications(bookRepository
-                .findAllByStoreIdAndNameContains(storeId, query, page));
+                .findAllByStoreIdAndNameContains(storeId, "%" + query + "%", page));
+
     }
 
     private ApplicationListResponse getApplications(Page<Book> bookPage) {
