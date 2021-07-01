@@ -8,10 +8,7 @@ import lombok.NoArgsConstructor;
 import org.yaml.snakeyaml.events.Event;
 import org.yaml.snakeyaml.tokens.Token;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 
 @Entity(name = "tbl_store")
 @Getter
@@ -36,9 +33,6 @@ public class Store {
     private double lng;
 
     private boolean declaration;
-
-    @OneToOne
-    private Storeuser storeuser;
 
     public Store update(String number, String openingHours, String address) {
         this.number = number;
