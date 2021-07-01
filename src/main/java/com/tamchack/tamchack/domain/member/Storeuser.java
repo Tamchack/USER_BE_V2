@@ -21,7 +21,7 @@ public class Storeuser {
     private String password;
 
     @JoinColumn(name = "store_id")
-    @OneToOne(mappedBy = "storeuser")
+    @OneToOne
     private Store store;
 
     public Storeuser update(String password) {
