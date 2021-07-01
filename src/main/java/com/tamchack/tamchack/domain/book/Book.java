@@ -1,6 +1,5 @@
 package com.tamchack.tamchack.domain.book;
 
-import com.tamchack.tamchack.domain.store.Store;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -18,10 +17,6 @@ public class Book {
 
     @Id
     private int id;
-
-    private int storeId;
-
-    private String userId;
 
     private String name;
 
