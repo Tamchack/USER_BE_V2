@@ -2,6 +2,7 @@ package com.tamchack.tamchack.service.member;
 
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.member.User;
+import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
@@ -12,16 +13,16 @@ import java.util.List;
 
 public interface MemberService {
 
-    void userSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest);
+    void userSignUp(UserSignUpRequest userSignUpRequest);
 
-    void storeuserSignUp(UserSignUpRequest userSignUpRequest, StoreuserSignUpRequest storeuserSignUpRequest);
+    void storeuserSignUp(StoreuserSignUpRequest storeuserSignUpRequest);
 
     void updateUserInformation(ReviseInformationRequest reviseInformationRequest, User user);
 
     void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, Storeuser storeuser);
 
-    List<StockResponse> getStockList(Integer storeId);
+    List<StockResponse> getStockList(Store store);
 
-    List<StoreResponse> getBookmarkList(String token);
+    List<StoreResponse> getBookmarkList(User user);
 
 }
