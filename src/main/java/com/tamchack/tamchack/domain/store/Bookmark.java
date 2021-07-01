@@ -1,5 +1,6 @@
 package com.tamchack.tamchack.domain.store;
 
+import com.tamchack.tamchack.domain.member.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -16,7 +17,9 @@ import javax.persistence.*;
 public class Bookmark {
 
     @Id
-    private String userId;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
 
     @Id
     @ManyToOne
