@@ -17,13 +17,13 @@ public class StoreuserSignUpRequest {
 
     private String password;
 
-    private String storeName;
+    private String name;
 
-    private String storeAddress;
+    private String address;
 
     private String openingHours;
 
-    private String storeNumber;
+    private String number;
 
     private double lat;
 
