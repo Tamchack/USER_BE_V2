@@ -17,12 +17,12 @@ import javax.persistence.*;
 public class Stock {
 
     @Id
-    @OneToOne
+    @OneToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "store_id")
     private Store store;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "book_id")
     private Book book;
 
