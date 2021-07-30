@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ReviseInformationRequest {
+public class UpdateInformationRequest {
 
     private String id;
 
@@ -17,6 +17,6 @@ public class ReviseInformationRequest {
 
     private String storeNumber;
 
-    private String openingHours;
+    private String timezone;
 
 }
