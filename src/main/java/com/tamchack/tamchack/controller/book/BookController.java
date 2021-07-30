@@ -2,7 +2,7 @@ package com.tamchack.tamchack.controller.book;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
-import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
+import com.tamchack.tamchack.dto.request.book.ReportBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
@@ -41,10 +41,10 @@ public class BookController {
 
     }
 
-    @PutMapping("/{bookId}")
-    public void DeclarationBook(@RequestBody DeclarationBookRequest declarationBookRequest) {
+    @PutMapping("/report/{bookId}")
+    public void reportBook(@RequestBody ReportBookRequest reportBookRequest) {
 
-        bookService.DeclarationBook(declarationBookRequest);
+        bookService.ReportBook(reportBookRequest);
 
     }
 
