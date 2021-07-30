@@ -14,10 +14,6 @@ public interface StoreRepository extends JpaRepository<Store, Integer> {
 
     Page<Store> findAllByName(String storeName, Pageable page);
 
-    Store findByNumber(String number);
-
-    Store findByOpeningHours(String openingHours);
-
     @Query(value = "SELECT * (6371*acos(cos(radians(?1))*cos(radians(lat))*cos(radians(lng)" +
                     "-radians(?2))+sin(radians(?1))*sin(radians(lat)))) " +
                     "AS distance FROM tbl_store HAVING distance <= 1", nativeQuery = true)
