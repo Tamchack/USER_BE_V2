@@ -1,6 +1,5 @@
 package com.tamchack.tamchack.domain.store;
 
-import com.tamchack.tamchack.domain.member.User;
 import lombok.Builder;
 
 import java.io.Serializable;
