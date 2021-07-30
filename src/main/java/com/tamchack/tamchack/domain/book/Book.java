@@ -28,10 +28,12 @@ public class Book {
 
     private String imageName;
 
-    private boolean declaration;
+    private boolean report;
 
-    public Book setDeclaration(boolean declaration) {
-        this.declaration = declaration;
+    private boolean bestseller;
+
+    public Book setReport(boolean report) {
+        this.report = report;
         return this;
     }
 
