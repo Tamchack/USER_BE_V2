@@ -4,14 +4,16 @@ import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.book.Stock;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
-import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
+import com.tamchack.tamchack.dto.request.book.ReportBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
 import com.tamchack.tamchack.exception.BookAlreadyExistsException;
 import com.tamchack.tamchack.exception.BookNotFoundException;
+import com.tamchack.tamchack.exception.StoreNotFoundException;
 import com.tamchack.tamchack.repository.book.BookRepository;
 import com.tamchack.tamchack.repository.book.StockRepository;
+import com.tamchack.tamchack.repository.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import org.springframework.beans.factory.annotation.Value;
@@ -30,6 +32,7 @@ public class BookServiceImpl implements BookService {
 
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
+    private final StoreRepository storeRepository;
 
     @Value("${image.upload.dir}")
     private String imagePath;
@@ -50,7 +53,7 @@ public class BookServiceImpl implements BookService {
                         .name(bookRequest.getName())
                         .author(bookRequest.getAuthor())
                         .publisher(bookRequest.getPublisher())
-                        .contents(bookRequest.getContents())
+                        .contents(bookRequest.getContent())
                         .imageName(fileName)
                         .build()
         );
@@ -78,8 +81,11 @@ public class BookServiceImpl implements BookService {
     @Override
     public void bookStock(StockRequest stockRequest) {
 
-        Book book = stockRequest.getBookId();
-        Store store = stockRequest.getStoreId();
+        Store store = storeRepository.findById(stockRequest.getStoreId())
+                .orElseThrow(StoreNotFoundException::new);
+
+        Book book = bookRepository.findById(stockRequest.getBookId())
+                .orElseThrow(BookNotFoundException::new);
 
         boolean isStocked = stockRepository.existsByStoreAndBook(store, book);
 
@@ -96,16 +102,16 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void DeclarationBook(DeclarationBookRequest declarationBookRequest) {
+    public void ReportBook(ReportBookRequest reportBookRequest) {
 
-        int bookId = declarationBookRequest.getBookId();
+        int bookId = reportBookRequest.getBookId();
 
         Book book = bookRepository.findById(bookId)
                 .orElseThrow(BookNotFoundException::new);
 
-        if(!book.isDeclaration()) {
+        if(!book.isReport()) {
             bookRepository.save(
-                    book.setDeclaration(true)
+                    book.setReport(true)
             );
         }
     }
