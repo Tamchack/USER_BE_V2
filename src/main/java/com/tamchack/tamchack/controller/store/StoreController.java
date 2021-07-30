@@ -1,8 +1,7 @@
 package com.tamchack.tamchack.controller.store;
 
-import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
-import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
+import com.tamchack.tamchack.dto.request.store.ReportStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.service.book.BookService;
@@ -30,9 +29,9 @@ public class StoreController {
     }
 
     @DeleteMapping("/{storeId}")
-    public void DeclarationStore(@RequestBody DeclarationStoreRequest declarationStoreRequest) {
+    public void reportStore(@RequestBody ReportStoreRequest reportStoreRequest) {
 
-        storeService.declarationStore(declarationStoreRequest);
+        storeService.reportStore(reportStoreRequest);
 
     }
 
