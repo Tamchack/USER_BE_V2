@@ -2,7 +2,7 @@ package com.tamchack.tamchack.service.member;
 
 import com.tamchack.tamchack.domain.book.Book;
 import com.tamchack.tamchack.domain.store.Bookmark;
-import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
+import com.tamchack.tamchack.dto.request.member.UpdateInformationRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.repository.book.BookRepository;
@@ -35,7 +35,6 @@ public class MemberServiceImpl implements MemberService{
     private final BookmarkRepository bookmarkRepository;
     private final BookRepository bookRepository;
     private final StockRepository stockRepository;
-    private final JwtProvider jwtProvider;
 
     private final PasswordEncoder passwordEncoder;
 
@@ -77,11 +76,10 @@ public class MemberServiceImpl implements MemberService{
 
         Store store = storeRepository.save(
                 Store.builder()
-                        .id(storeuserSignUpRequest.getStoreId())
                         .name(storeuserSignUpRequest.getName())
                         .address(storeuserSignUpRequest.getAddress())
                         .number(storeuserSignUpRequest.getNumber())
-                        .openingHours(storeuserSignUpRequest.getOpeningHours())
+                        .timezone(storeuserSignUpRequest.getTimezone())
                         .lat(storeuserSignUpRequest.getLat())
                         .lng(storeuserSignUpRequest.getLng())
                         .build()
@@ -98,26 +96,26 @@ public class MemberServiceImpl implements MemberService{
     }
 
     @Override
-    public void updateUserInformation(ReviseInformationRequest reviseInformationRequest, User user) {
+    public void updateUserInformation(UpdateInformationRequest updateInformationRequest, User user) {
 
-        String password = reviseInformationRequest.getPassword();
+        String password = updateInformationRequest.getPassword();
 
         userRepository.save(user.update(password));
     }
 
     @Override
-    public void updateStoreuserInformation(ReviseInformationRequest reviseInformationRequest, Storeuser storeuser) {
+    public void updateStoreuserInformation(UpdateInformationRequest updateInformationRequest, Storeuser storeuser) {
 
-        String password = reviseInformationRequest.getPassword();
+        String password = updateInformationRequest.getPassword();
 
-        String number = reviseInformationRequest.getStoreNumber();
-        String openingHours = reviseInformationRequest.getOpeningHours();
-        String address = reviseInformationRequest.getAddress();
+        String number = updateInformationRequest.getStoreNumber();
+        String timezone = updateInformationRequest.getTimezone();
+        String address = updateInformationRequest.getAddress();
 
         Store store = storeuser.getStore();
 
         storeuserRepository.save(storeuser.update(password));
-        storeRepository.save(store.update(number, openingHours, address));
+        storeRepository.save(store.update(number, timezone, address));
 
     }
 
@@ -156,7 +154,7 @@ public class MemberServiceImpl implements MemberService{
                     StoreResponse.builder()
                             .storeId(store.getId())
                             .name(store.getName())
-                            .openingHours(store.getOpeningHours())
+                            .timezone(store.getTimezone())
                             .number(store.getNumber())
                             .build()
             );
