@@ -1,10 +1,7 @@
 package com.tamchack.tamchack.service.store;
 
-import com.tamchack.tamchack.domain.member.Storeuser;
-import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
-import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
-import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
+import com.tamchack.tamchack.dto.request.store.ReportStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import org.springframework.data.domain.Pageable;
@@ -15,7 +12,7 @@ public interface StoreService {
 
     void bookmarkStore(BookmarkRequest bookmarkRequest);
 
-    void declarationStore(DeclarationStoreRequest declarationStoreRequest);
+    void reportStore(ReportStoreRequest reportStoreRequest);
 
     ApplicationListResponse searchStore(String query, Pageable page);
 
