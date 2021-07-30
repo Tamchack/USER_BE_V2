@@ -11,8 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class BookResponse {
 
-    private Integer bookId;
-
     private String name;
 
     private String author;
