@@ -1,9 +1,8 @@
 package com.tamchack.tamchack.service.book;
 
 import com.tamchack.tamchack.domain.book.Book;
-import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.book.BookRequest;
-import com.tamchack.tamchack.dto.request.book.DeclarationBookRequest;
+import com.tamchack.tamchack.dto.request.book.ReportBookRequest;
 import com.tamchack.tamchack.dto.request.book.StockRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.book.BookResponse;
@@ -17,7 +16,7 @@ public interface BookService {
 
     void bookStock(StockRequest stockRequest);
 
-    void DeclarationBook(DeclarationBookRequest declarationBookRequest);
+    void ReportBook(ReportBookRequest reportBookRequest);
 
     ApplicationListResponse searchBook(String query, Pageable page);
 
