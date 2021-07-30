@@ -4,11 +4,13 @@ import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.domain.store.Bookmark;
 import com.tamchack.tamchack.domain.store.Store;
 import com.tamchack.tamchack.dto.request.store.BookmarkRequest;
-import com.tamchack.tamchack.dto.request.store.DeclarationStoreRequest;
+import com.tamchack.tamchack.dto.request.store.ReportStoreRequest;
 import com.tamchack.tamchack.dto.response.address.ApplicationListResponse;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.exception.StoreNotFoundException;
+import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
+import com.tamchack.tamchack.repository.member.UserRepository;
 import com.tamchack.tamchack.repository.store.BookmarkRepository;
 import com.tamchack.tamchack.repository.store.StoreRepository;
 import lombok.RequiredArgsConstructor;
@@ -25,7 +27,7 @@ public class StoreServiceImpl implements StoreService {
 
     private final StoreRepository storeRepository;
     private final BookmarkRepository bookmarkRepository;
-    private final StoreuserRepository storeuserRepository;
+    private final UserRepository userRepository;
 
     @Override
     public StoreResponse getStore(Integer storeId) {
@@ -37,7 +39,7 @@ public class StoreServiceImpl implements StoreService {
                 .name(store.getName())
                 .address(store.getAddress())
                 .number(store.getNumber())
-                .openingHours(store.getOpeningHours())
+                .timezone(store.getTimezone())
                 .build();
 
     }
@@ -45,8 +47,11 @@ public class StoreServiceImpl implements StoreService {
     @Override
     public void bookmarkStore(BookmarkRequest bookmarkRequest) {
 
-        Store store = bookmarkRequest.getStoreId();
-        User user = bookmarkRequest.getUserId();
+        Store store = storeRepository.findById(bookmarkRequest.getStoreId())
+                .orElseThrow(StoreNotFoundException::new);
+
+        User user = userRepository.findById(bookmarkRequest.getUserId())
+                .orElseThrow(UserNotFoundException::new);
 
         boolean isBookmarked = bookmarkRepository.existsByStoreAndUser(store, user);
 
@@ -63,16 +68,16 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public void declarationStore(DeclarationStoreRequest declarationStoreRequest) {
+    public void reportStore(ReportStoreRequest reportStoreRequest) {
 
-        int storeId = declarationStoreRequest.getStoreId();
+        int storeId = reportStoreRequest.getStoreId();
 
         Store store = storeRepository.findById(storeId)
                 .orElseThrow(StoreNotFoundException::new);
 
-        if(!store.isDeclaration()) {
+        if(!store.isReport()) {
             storeRepository.save(
-                    store.setDeclaration(true)
+                    store.setReport(true)
             );
         }
 
@@ -92,7 +97,7 @@ public class StoreServiceImpl implements StoreService {
                             .name(store.getName())
                             .address(store.getAddress())
                             .number(store.getNumber())
-                            .openingHours(store.getOpeningHours())
+                            .timezone(store.getTimezone())
                             .build()
             );
         }
