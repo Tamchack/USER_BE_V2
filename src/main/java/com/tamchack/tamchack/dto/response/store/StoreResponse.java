@@ -19,7 +19,7 @@ public class StoreResponse {
 
     private String number;
 
-    private String openingHours;
+    private String timezone;
 
     private double lat;
 
