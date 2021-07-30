@@ -13,15 +13,13 @@ public class StoreuserSignUpRequest {
 
     private String id;
 
-    private int storeId;
-
     private String password;
 
     private String name;
 
     private String address;
 
-    private String openingHours;
+    private String timezone;
 
     private String number;
 
