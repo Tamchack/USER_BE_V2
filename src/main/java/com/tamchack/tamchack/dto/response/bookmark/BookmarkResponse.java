@@ -13,7 +13,7 @@ public class BookmarkResponse {
 
     private String name;
 
-    private String openingHours;
+    private String timezone;
 
     private String number;
 
