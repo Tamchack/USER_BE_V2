@@ -17,12 +17,12 @@ import javax.persistence.*;
 public class Bookmark {
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "user_id")
     private User user;
 
     @Id
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.REMOVE)
     @JoinColumn(name = "store_id", referencedColumnName = "id")
     private Store store;
 
