@@ -1,12 +1,9 @@
 package com.tamchack.tamchack.domain.store;
 
-import com.tamchack.tamchack.domain.member.Storeuser;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.yaml.snakeyaml.events.Event;
-import org.yaml.snakeyaml.tokens.Token;
 
 import javax.persistence.*;
 
@@ -26,23 +23,23 @@ public class Store {
 
     private String number;
 
-    private String openingHours;
+    private String timezone;
 
     private double lat;
 
     private double lng;
 
-    private boolean declaration;
+    private boolean report;
 
-    public Store update(String number, String openingHours, String address) {
+    public Store update(String number, String timezone, String address) {
         this.number = number;
         this.address = address;
-        this.openingHours = openingHours;
+        this.timezone = timezone;
         return this;
     }
 
-    public Store setDeclaration(boolean declaration) {
-        this.declaration = declaration;
+    public Store setReport (boolean report) {
+        this.report = report;
         return this;
     }
 
