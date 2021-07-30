@@ -1,7 +1,7 @@
 package com.tamchack.tamchack.controller.member;
 
 import com.tamchack.tamchack.domain.member.User;
-import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
+import com.tamchack.tamchack.dto.request.member.UpdateInformationRequest;
 import com.tamchack.tamchack.dto.request.member.UserSignUpRequest;
 import com.tamchack.tamchack.dto.response.store.StoreResponse;
 import com.tamchack.tamchack.service.member.MemberService;
@@ -26,10 +26,10 @@ public class UserController {
     }
 
     @PutMapping("/update")
-    public void updateUserInformation(@RequestBody ReviseInformationRequest reviseInformationRequest,
+    public void updateUserInformation(@RequestBody UpdateInformationRequest updateInformationRequest,
                                       @AuthenticationPrincipal User user) {
 
-        memberService.updateUserInformation(reviseInformationRequest, user);
+        memberService.updateUserInformation(updateInformationRequest, user);
 
     }
 

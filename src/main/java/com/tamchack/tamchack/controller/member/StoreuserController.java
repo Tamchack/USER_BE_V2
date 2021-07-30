@@ -2,7 +2,7 @@ package com.tamchack.tamchack.controller.member;
 
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.domain.store.Store;
-import com.tamchack.tamchack.dto.request.member.ReviseInformationRequest;
+import com.tamchack.tamchack.dto.request.member.UpdateInformationRequest;
 import com.tamchack.tamchack.dto.request.member.StoreuserSignUpRequest;
 import com.tamchack.tamchack.dto.response.book.StockResponse;
 import com.tamchack.tamchack.service.member.MemberService;
@@ -26,10 +26,10 @@ public class StoreuserController {
     }
 
     @PostMapping("/update")
-    public void updateStoreuserInformation(@RequestBody ReviseInformationRequest reviseInformationRequest,
+    public void updateStoreuserInformation(@RequestBody UpdateInformationRequest updateInformationRequest,
                                            @AuthenticationPrincipal Storeuser storeuser) {
 
-        memberService.updateStoreuserInformation(reviseInformationRequest, storeuser);
+        memberService.updateStoreuserInformation(updateInformationRequest, storeuser);
 
     }
 
