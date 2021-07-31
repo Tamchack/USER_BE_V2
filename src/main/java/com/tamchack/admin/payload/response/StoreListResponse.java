@@ -9,8 +9,7 @@ import java.util.List;
 @AllArgsConstructor
 public class StoreListResponse {
 
-    private int totalPages;
-
-    List<StoreResponse> storeResponses;
+    private final int totalPages;
+    private final List<StoreResponse> storeResponses;
 
 }
