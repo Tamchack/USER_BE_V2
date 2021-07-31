@@ -7,4 +7,6 @@ public interface UserService {
 
     UserListResponse getListUser(Pageable pageable);
 
+    void deleteUser(String userId);
+
 }
