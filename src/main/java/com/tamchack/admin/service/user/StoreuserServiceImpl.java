@@ -3,6 +3,7 @@ package com.tamchack.admin.service.user;
 import com.tamchack.admin.payload.response.StoreUserListResponse;
 import com.tamchack.admin.payload.response.StoreUserResponse;
 import com.tamchack.tamchack.domain.member.Storeuser;
+import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,4 +38,12 @@ public class StoreuserServiceImpl implements StoreuserService {
                 .build();
     }
 
+    @Override
+    public void deleteStoreuser(String storeuserId) {
+        Storeuser storeuser = storeuserRepository.findById(storeuserId)
+                .orElseThrow(UserNotFoundException::new);
+
+
+        storeuserRepository.delete(storeuser);
+    }
 }
