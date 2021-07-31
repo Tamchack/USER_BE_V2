@@ -7,4 +7,6 @@ public interface StoreService {
 
     StoreListResponse getListStore(Pageable pageable);
 
+    void deleteStore(int storeId);
+
 }
