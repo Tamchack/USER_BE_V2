@@ -2,6 +2,12 @@ server:
   port: 8000
   jackson:
     property-naming-strategy: SNAKE_CASE
+  servlet:
+    encoding:
+      charset: UTF-8
+      force: true
+      force-response: true
+      force-request: true
 
 spring:
   datasource:
