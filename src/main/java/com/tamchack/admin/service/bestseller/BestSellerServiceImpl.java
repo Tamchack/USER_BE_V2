@@ -9,6 +9,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
@@ -21,9 +22,25 @@ public class BestSellerServiceImpl implements BestSellerService {
     public BestSellerListResponse getListBestSeller(Pageable pageable) {
         Page<Book> books = bookRepository.findAllBy(pageable);
 
-        return new BestSellerListResponse(books.getTotalPages(),
-                books.map(this::buildBestSeller)
-                        .stream().collect(Collectors.toList()));
+        int totalPages = books.getTotalPages();
+
+        List<BestSellerResponse> mapBook = books.map(this::buildBestSeller)
+                .stream().collect(Collectors.toList());
+
+        return new BestSellerListResponse(totalPages, mapBook);
+    }
+
+    @Override
+    public BestSellerListResponse choiceBestSeller() {
+
+        Page<Book> bestseller = bookRepository.findByBestseller(true);
+
+        int totalPages = bestseller.getTotalPages();
+
+        List<BestSellerResponse> mapBook = bestseller.map(this::buildBestSeller)
+                .stream().collect(Collectors.toList());
+
+        return new BestSellerListResponse(totalPages, mapBook);
     }
 
     private BestSellerResponse buildBestSeller(Book book) {

@@ -7,4 +7,6 @@ public interface BestSellerService {
 
     BestSellerListResponse getListBestSeller(Pageable pageable);
 
+    BestSellerListResponse choiceBestSeller();
+
 }
