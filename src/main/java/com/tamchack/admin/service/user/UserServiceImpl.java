@@ -5,7 +5,7 @@ import com.tamchack.admin.payload.response.UserResponse;
 import com.tamchack.tamchack.domain.member.User;
 import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.member.UserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
