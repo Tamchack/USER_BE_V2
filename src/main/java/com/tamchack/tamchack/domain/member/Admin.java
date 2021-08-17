@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name = "tbl_adminuser")
+@Entity(name = "tbl_admin")
 @Getter
 @Builder
 @NoArgsConstructor
@@ -19,10 +19,5 @@ public class Admin {
     private String id;
 
     private String password;
-
-    public Admin update(String password) {
-        this.password = password;
-        return this;
-    }
 
 }
