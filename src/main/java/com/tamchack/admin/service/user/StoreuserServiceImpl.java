@@ -5,7 +5,7 @@ import com.tamchack.admin.payload.response.StoreUserResponse;
 import com.tamchack.tamchack.domain.member.Storeuser;
 import com.tamchack.tamchack.exception.UserNotFoundException;
 import com.tamchack.tamchack.repository.member.StoreuserRepository;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class StoreuserServiceImpl implements StoreuserService {
 
     private final StoreuserRepository storeuserRepository;
