@@ -15,9 +15,7 @@ public class StoreUserController {
 
     @GetMapping("/list")
     public StoreListResponse getStoreUsers(@RequestParam Pageable pageable) {
-
         return storeService.getListStore(pageable);
-
     }
     @DeleteMapping("{/storeuserId}")
     public void deleteStoreuser(@PathVariable int storeuserId) {
